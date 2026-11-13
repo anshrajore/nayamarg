@@ -1,52 +1,45 @@
 "use client";
 
 import React, { useState } from "react";
+import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
-import { GeospatialRadar } from "@/components/GeospatialRadar";
-import { LiveVoiceSimulator } from "@/components/LiveVoiceSimulator";
-import { RecruitmentPipelineMatrix } from "@/components/RecruitmentPipelineMatrix";
-import { FailureCentre } from "@/components/FailureCentre";
-import { ArchitectureSection } from "@/components/ArchitectureSection";
+import { HowItWorksSection } from "@/components/HowItWorksSection";
+import { EmployerExperience } from "@/components/EmployerExperience";
+import { WorkerExperience } from "@/components/WorkerExperience";
+import { FooterSection } from "@/components/FooterSection";
 
 export default function Home() {
-  const [pipelineToast, setPipelineToast] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"all" | "employer" | "worker">("all");
 
-  const handleVoiceResponse = (result: { type: string; payload: any }) => {
-    if (result.type === "INTERESTED") {
-      setPipelineToast("Candidate qualified! Interview stage updated and vacancy reservation checked.");
-      setTimeout(() => setPipelineToast(null), 4000);
-    } else if (result.type === "OPT_OUT") {
-      setPipelineToast("Candidate opted out. Suppression recorded globally across all campaigns.");
-      setTimeout(() => setPipelineToast(null), 4000);
+  const handleSelectRole = (role: "employer" | "worker") => {
+    setActiveTab(role);
+    const element = document.getElementById(role);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <div className="relative">
-      {/* Toast Notification */}
-      {pipelineToast && (
-        <div className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-black/90 border border-brand-electricLime/40 text-brand-electricLime text-xs font-semibold shadow-2xl backdrop-blur-xl animate-bounce">
-          ⚡ {pipelineToast}
-        </div>
-      )}
+    <div className="min-h-screen bg-[#050608] text-gray-100 selection:bg-blue-600 selection:text-white">
+      {/* Floating Navbar matching inspiration */}
+      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {/* 1. Hero with Capsule Typography & Process Flow */}
-      <HeroSection />
+      {/* Hero with exact luxury typography ("We connect the best workers in this country") + 3-card carousel + mosaic */}
+      <HeroSection onSelectRole={handleSelectRole} />
 
-      {/* 2. Geospatial PostGIS Radar & Suitability Scoring */}
-      <GeospatialRadar />
+      {/* 5-Stage Recruitment Operational Process */}
+      <HowItWorksSection />
 
-      {/* 3. Live Sarvam Voice Call Simulator */}
-      <LiveVoiceSimulator onCandidateResponse={handleVoiceResponse} />
+      {/* Desktop-first Employer Workspace */}
+      <div id="featured-talent">
+        <EmployerExperience />
+      </div>
 
-      {/* 4. Vacancy Slots & Capacity Accounting Matrix */}
-      <RecruitmentPipelineMatrix />
+      {/* Mobile-first Multilingual Worker Experience */}
+      <WorkerExperience />
 
-      {/* 5. Failure Centre & Operations Center */}
-      <FailureCentre />
-
-      {/* 6. System Architecture & Invariant Standards */}
-      <ArchitectureSection />
+      {/* Stamped Monogram CTA & Editorial Footer matching reference */}
+      <FooterSection />
     </div>
   );
 }
