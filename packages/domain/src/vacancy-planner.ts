@@ -36,6 +36,24 @@ export const STAGE_WEIGHTS = {
   OFFER_PENDING: 0.90,
 } as const;
 
+export function calculateWeightedPipelineCapacity(counts: PipelineCounts): number {
+  return Number(
+    (
+      counts.interested * STAGE_WEIGHTS.QUALIFIED_INTERESTED +
+      counts.shortlisted * STAGE_WEIGHTS.SHORTLISTED +
+      counts.interviewed * STAGE_WEIGHTS.INTERVIEW_SCHEDULED +
+      counts.offered * STAGE_WEIGHTS.OFFER_PENDING
+    ).toFixed(2)
+  );
+}
+
+export interface PipelineCounts {
+  interested: number;
+  shortlisted: number;
+  interviewed: number;
+  offered: number;
+}
+
 export function calculateVacancyCapacity(input: VacancyPlanInput): VacancyPlanOutput {
   const coverageFactor = input.targetCoverageFactor ?? 1.5;
   const remainingVacancies = Math.max(0, input.requiredVacancies - input.filledVacancies);

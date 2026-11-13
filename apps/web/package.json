@@ -12,6 +12,7 @@
     "@nayamarg/contracts": "workspace:*",
     "@nayamarg/domain": "workspace:*",
     "@nayamarg/providers": "workspace:*",
+    "@nayamarg/recruitment-orchestrator": "workspace:*",
     "@nayamarg/workflow-engine": "workspace:*",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",

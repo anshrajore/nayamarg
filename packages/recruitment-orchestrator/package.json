@@ -1,0 +1,22 @@
+{
+  "name": "@nayamarg/recruitment-orchestrator",
+  "version": "2.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@nayamarg/contracts": "workspace:*",
+    "@nayamarg/domain": "workspace:*",
+    "@nayamarg/providers": "workspace:*",
+    "@nayamarg/workflow-engine": "workspace:*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}
