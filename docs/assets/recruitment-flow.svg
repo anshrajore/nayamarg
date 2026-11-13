@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" width="100%" height="100%" style="background:#07080b; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <linearGradient id="cardGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Header -->
+  <text x="40" y="45" font-size="18" font-weight="800" fill="#ffffff">Autonomous Recruitment Engine Lifecycle</text>
+  <text x="450" y="45" font-size="12" font-weight="600" fill="#38bdf8">DETERMINISTIC VACANCY ACCOUNTING &amp; VOICE ORCHESTRATION</text>
+
+  <!-- Flow Steps: 6 Blocks in a 2x3 Grid with directional arrows -->
+
+  <!-- 1. Vacancy Ingestion -->
+  <rect x="40" y="80" width="310" height="150" rx="14" fill="url(#cardGlow)" stroke="#334155"/>
+  <rect x="55" y="95" width="28" height="20" rx="4" fill="#2563eb"/>
+  <text x="61" y="110" font-size="11" font-weight="800" fill="#ffffff">01</text>
+  <text x="92" y="110" font-size="13" font-weight="700" fill="#ffffff">Job Request &amp; Ingestion</text>
+  <text x="55" y="140" font-size="11" fill="#94a3b8">Employer posts vacancy requirement:</text>
+  <text x="55" y="160" font-size="11" font-family="monospace" fill="#38bdf8">• 10 Machine Operators (Nashik)</text>
+  <text x="55" y="178" font-size="11" font-family="monospace" fill="#cbd5e1">• ₹15k–₹18k/mo, Day shift, 1–5 yrs</text>
+  <text x="55" y="200" font-size="10" fill="#10b981" font-weight="bold">✓ Snapshot Version 1.0 created</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="350" y1="155" x2="390" y2="155" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2. Geospatial PostGIS Filter -->
+  <rect x="400" y="80" width="310" height="150" rx="14" fill="url(#cardGlow)" stroke="#334155"/>
+  <rect x="415" y="95" width="28" height="20" rx="4" fill="#8b5cf6"/>
+  <text x="421" y="110" font-size="11" font-weight="800" fill="#ffffff">02</text>
+  <text x="452" y="110" font-size="13" font-weight="700" fill="#ffffff">PostGIS Radius &amp; Ranking</text>
+  <text x="415" y="140" font-size="11" fill="#94a3b8">Geographic bounding (Point, 4326):</text>
+  <text x="415" y="160" font-size="11" font-family="monospace" fill="#c084fc">• ST_DWithin 25 km around Nashik</text>
+  <text x="415" y="178" font-size="11" font-family="monospace" fill="#cbd5e1">• Suitability scoring (30% Skill, 20% Exp)</text>
+  <text x="415" y="200" font-size="10" fill="#10b981" font-weight="bold">✓ 150 eligible candidates sorted</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="710" y1="155" x2="750" y2="155" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3. Telecom Gate -->
+  <rect x="760" y="80" width="300" height="150" rx="14" fill="url(#cardGlow)" stroke="#334155"/>
+  <rect x="775" y="95" width="28" height="20" rx="4" fill="#f59e0b"/>
+  <text x="781" y="110" font-size="11" font-weight="800" fill="#ffffff">03</text>
+  <text x="812" y="110" font-size="13" font-weight="700" fill="#ffffff">TRAI &amp; Consent Guard</text>
+  <text x="775" y="140" font-size="11" fill="#94a3b8">Strict eligibility evaluation:</text>
+  <text x="775" y="160" font-size="11" font-family="monospace" fill="#fcd34d">• Hours: 09:00 to 19:00 IST</text>
+  <text x="775" y="178" font-size="11" font-family="monospace" fill="#cbd5e1">• Purpose-tied consent &amp; cooldown</text>
+  <text x="775" y="200" font-size="10" fill="#10b981" font-weight="bold">✓ Cross-campaign contact locked</text>
+
+  <!-- Downward connector from 3 to 4 -->
+  <path d="M 910 230 L 910 265 L 195 265 L 195 290" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 4. Sequential Voice AI Dispatch -->
+  <rect x="40" y="290" width="310" height="150" rx="14" fill="url(#cardGlow)" stroke="#3b82f6"/>
+  <rect x="55" y="305" width="28" height="20" rx="4" fill="#2563eb"/>
+  <text x="61" y="320" font-size="11" font-weight="800" fill="#ffffff">04</text>
+  <text x="92" y="320" font-size="13" font-weight="700" fill="#60a5fa">Sarvam AI Calling (c=1)</text>
+  <text x="55" y="350" font-size="11" fill="#94a3b8">Sequential phone conversation:</text>
+  <text x="55" y="370" font-size="11" font-family="monospace" fill="#93c5fd">• Concurrency Limit = 1 per run</text>
+  <text x="55" y="388" font-size="11" font-family="monospace" fill="#cbd5e1">• Natural speech in Hindi/Marathi</text>
+  <text x="55" y="410" font-size="10" fill="#10b981" font-weight="bold">✓ Structured response Zod extraction</text>
+
+  <!-- Arrow 4 -> 5 -->
+  <line x1="350" y1="365" x2="390" y2="365" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5. Vacancy Accounting -->
+  <rect x="400" y="290" width="310" height="150" rx="14" fill="url(#cardGlow)" stroke="#8b5cf6"/>
+  <rect x="415" y="305" width="28" height="20" rx="4" fill="#8b5cf6"/>
+  <text x="421" y="320" font-size="11" font-weight="800" fill="#ffffff">05</text>
+  <text x="452" y="320" font-size="13" font-weight="700" fill="#c084fc">Capacity &amp; Slot Accounting</text>
+  <text x="415" y="350" font-size="11" fill="#94a3b8">Target coverage planning:</text>
+  <text x="415" y="370" font-size="11" font-family="monospace" fill="#e9d5ff">• Target pool = 10 × 1.5 = 15</text>
+  <text x="415" y="388" font-size="11" font-family="monospace" fill="#cbd5e1">• 10 Individual Vacancy Slots</text>
+  <text x="415" y="410" font-size="10" fill="#10b981" font-weight="bold">✓ Outreach pauses at PIPELINE_READY</text>
+
+  <!-- Arrow 5 -> 6 -->
+  <line x1="710" y1="365" x2="750" y2="365" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 6. Verified Joining & Close -->
+  <rect x="760" y="290" width="300" height="150" rx="14" fill="url(#cardGlow)" stroke="#10b981"/>
+  <rect x="775" y="305" width="28" height="20" rx="4" fill="#10b981"/>
+  <text x="781" y="320" font-size="11" font-weight="800" fill="#ffffff">06</text>
+  <text x="812" y="320" font-size="13" font-weight="700" fill="#34d399">Interview &amp; Confirmed Joining</text>
+  <text x="775" y="350" font-size="11" fill="#94a3b8">Employer decision &amp; onboarding:</text>
+  <text x="775" y="370" font-size="11" font-family="monospace" fill="#a7f3d0">• Temporary offer reservation</text>
+  <text x="775" y="388" font-size="11" font-family="monospace" fill="#cbd5e1">• Confirmed joining date logged</text>
+  <text x="775" y="410" font-size="10" fill="#10b981" font-weight="bold">✓ 10 of 10 Joined = FILLED</text>
+</svg>

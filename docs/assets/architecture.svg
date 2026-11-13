@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" width="100%" height="100%" style="background:#07080b; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#059669" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="gradPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#6d28d9" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="gradAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Title & Status -->
+  <text x="40" y="45" font-size="20" font-weight="800" fill="#ffffff" letter-spacing="-0.5px">NayaMarg 2.0</text>
+  <text x="175" y="45" font-size="12" font-weight="600" fill="#10b981" letter-spacing="1px">SYSTEM TOPOLOGY &amp; DATA FABRIC</text>
+  <rect x="940" y="28" width="120" height="24" rx="12" fill="rgba(16, 185, 129, 0.1)" stroke="rgba(16, 185, 129, 0.3)"/>
+  <circle cx="952" cy="40" r="4" fill="#10b981"/>
+  <text x="964" y="44" font-size="10" font-weight="700" fill="#10b981">SARVAM NATIVE</text>
+
+  <!-- 1. PRESENTATION LAYER -->
+  <rect x="40" y="70" width="1020" height="90" rx="16" fill="#0d1017" stroke="rgba(255,255,255,0.08)"/>
+  <text x="60" y="95" font-size="11" font-weight="700" fill="#94a3b8" letter-spacing="1px">LAYER 01: PRESENTATION &amp; EDGE CLIENTS (NEXT.JS 15 APP ROUTER)</text>
+  
+  <rect x="60" y="108" width="290" height="40" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="75" y="132" font-size="12" font-weight="600" fill="#ffffff">Public Experience &amp; Discovery</text>
+  <text x="280" y="132" font-size="10" font-family="monospace" fill="#64748b">/jobs/*</text>
+
+  <rect x="370" y="108" width="340" height="40" rx="10" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.3)"/>
+  <text x="385" y="132" font-size="12" font-weight="600" fill="#93c5fd">Employer Workspace (Desktop)</text>
+  <text x="635" y="132" font-size="10" font-family="monospace" fill="#60a5fa">/employer/*</text>
+
+  <rect x="730" y="108" width="310" height="40" rx="10" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.3)"/>
+  <text x="745" y="132" font-size="12" font-weight="600" fill="#6ee7b7">Worker App (Mobile-First)</text>
+  <text x="975" y="132" font-size="10" font-family="monospace" fill="#34d399">/worker/*</text>
+
+  <!-- Downward Connectors -->
+  <line x1="550" y1="160" x2="550" y2="185" stroke="#334155" stroke-width="2" stroke-dasharray="4"/>
+
+  <!-- 2. API & TRANSACTIONAL BOUNDARY -->
+  <rect x="40" y="185" width="1020" height="95" rx="16" fill="#0d1017" stroke="rgba(255,255,255,0.08)"/>
+  <text x="60" y="210" font-size="11" font-weight="700" fill="#94a3b8" letter-spacing="1px">LAYER 02: APPLICATION SERVICE &amp; DOMAIN ENVELOPE (NESTJS + FASTIFY)</text>
+
+  <rect x="60" y="222" width="230" height="42" rx="10" fill="#151923" stroke="#334155"/>
+  <text x="75" y="247" font-size="12" font-weight="600" fill="#e2e8f0">Zod Contract Gate</text>
+  <text x="210" y="247" font-size="10" fill="#10b981" font-weight="bold">VALIDATED</text>
+
+  <rect x="310" y="222" width="240" height="42" rx="10" fill="#151923" stroke="#334155"/>
+  <text x="325" y="247" font-size="12" font-weight="600" fill="#e2e8f0">RBAC / Tenancy Guard</text>
+  <text x="495" y="247" font-size="10" fill="#38bdf8" font-weight="bold">RLS SYNC</text>
+
+  <rect x="570" y="222" width="240" height="42" rx="10" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.4)"/>
+  <text x="585" y="247" font-size="12" font-weight="600" fill="#c4b5fd">Transactional Outbox</text>
+  <text x="740" y="247" font-size="10" fill="#a78bfa" font-weight="bold">AT-LEAST-1</text>
+
+  <rect x="830" y="222" width="210" height="42" rx="10" fill="#151923" stroke="#334155"/>
+  <text x="845" y="247" font-size="12" font-weight="600" fill="#e2e8f0">Idempotency Store</text>
+  <text x="980" y="247" font-size="10" fill="#f59e0b" font-weight="bold">DEDUP</text>
+
+  <!-- Connectors to Split: Storage & Queues -->
+  <line x1="300" y1="280" x2="300" y2="310" stroke="#334155" stroke-width="2"/>
+  <line x1="800" y1="280" x2="800" y2="310" stroke="#334155" stroke-width="2"/>
+
+  <!-- 3. PERSISTENT STORAGE (SUPABASE) & 4. ASYNC QUEUES (REDIS/BULLMQ) -->
+  <!-- Left Box: Supabase PostgreSQL 4 Schemas -->
+  <rect x="40" y="310" width="500" height="155" rx="16" fill="#0d1017" stroke="rgba(56,189,248,0.25)"/>
+  <text x="60" y="335" font-size="11" font-weight="700" fill="#38bdf8" letter-spacing="1px">PERSISTENT PLATFORM: SUPABASE POSTGRESQL</text>
+
+  <rect x="60" y="350" width="220" height="46" rx="8" fill="#141824" stroke="#1e293b"/>
+  <text x="72" y="370" font-size="11" font-weight="700" fill="#93c5fd">schema: public</text>
+  <text x="72" y="386" font-size="9" fill="#64748b">profiles, orgs, contact_prefs</text>
+
+  <rect x="300" y="350" width="220" height="46" rx="8" fill="#141824" stroke="rgba(16,185,129,0.3)"/>
+  <text x="312" y="370" font-size="11" font-weight="700" fill="#34d399">schema: recruitment</text>
+  <text x="312" y="386" font-size="9" fill="#64748b">hiring_requests, vacancy_slots (1-10)</text>
+
+  <rect x="60" y="405" width="220" height="46" rx="8" fill="#141824" stroke="rgba(245,158,11,0.3)"/>
+  <text x="72" y="425" font-size="11" font-weight="700" fill="#fbbf24">schema: communications</text>
+  <text x="72" y="441" font-size="9" fill="#64748b">call_attempts, call_results, sms</text>
+
+  <rect x="300" y="405" width="220" height="46" rx="8" fill="#141824" stroke="rgba(139,92,246,0.3)"/>
+  <text x="312" y="425" font-size="11" font-weight="700" fill="#c084fc">schema: operations</text>
+  <text x="312" y="441" font-size="9" fill="#64748b">outbox_events, failures, audit_logs</text>
+
+  <!-- Right Box: Redis + BullMQ Workers -->
+  <rect x="560" y="310" width="500" height="155" rx="16" fill="#0d1017" stroke="rgba(239,68,68,0.25)"/>
+  <text x="580" y="335" font-size="11" font-weight="700" fill="#f87171" letter-spacing="1px">EXECUTION RUNTIME: REDIS + BULLMQ WORKERS</text>
+
+  <rect x="580" y="350" width="220" height="46" rx="8" fill="#141824" stroke="#1e293b"/>
+  <text x="592" y="370" font-size="11" font-weight="700" fill="#fca5a5">queue: voice.dispatch</text>
+  <text x="592" y="386" font-size="9" fill="#64748b">concurrency=1, lease+fencing</text>
+
+  <rect x="820" y="350" width="220" height="46" rx="8" fill="#141824" stroke="#1e293b"/>
+  <text x="832" y="370" font-size="11" font-weight="700" fill="#fca5a5">queue: sms.dispatch</text>
+  <text x="832" y="386" font-size="9" fill="#64748b">dlt_templates, delivery_receipts</text>
+
+  <rect x="580" y="405" width="220" height="46" rx="8" fill="#141824" stroke="#1e293b"/>
+  <text x="592" y="425" font-size="11" font-weight="700" fill="#fca5a5">queue: matching.execute</text>
+  <text x="592" y="441" font-size="9" fill="#64748b">postgis_radius_25km, scoring_v1</text>
+
+  <rect x="820" y="405" width="220" height="46" rx="8" fill="#141824" stroke="#1e293b"/>
+  <text x="832" y="425" font-size="11" font-weight="700" fill="#fca5a5">queue: system.reconcile</text>
+  <text x="832" y="441" font-size="9" fill="#64748b">reconcile_unknowns, no_blind_retries</text>
+
+  <!-- 5. EXTERNAL TELECOM & VOICE INTELLIGENCE INTEGRATION -->
+  <line x1="550" y1="465" x2="550" y2="495" stroke="#334155" stroke-width="2" stroke-dasharray="4"/>
+
+  <rect x="40" y="495" width="1020" height="95" rx="16" fill="#0c111c" stroke="rgba(16,185,129,0.3)"/>
+  <text x="60" y="520" font-size="11" font-weight="700" fill="#10b981" letter-spacing="1px">LAYER 04: VOICE AI &amp; TELEPHONY ADAPTER BOUNDARY</text>
+
+  <rect x="60" y="533" width="290" height="44" rx="10" fill="#131e2b" stroke="rgba(37,99,235,0.4)"/>
+  <text x="75" y="552" font-size="12" font-weight="700" fill="#60a5fa">Sarvam AI Agents</text>
+  <text x="75" y="568" font-size="9" fill="#94a3b8">Instant Outbound API • Hindi, Marathi, English</text>
+
+  <rect x="370" y="533" width="340" height="44" rx="10" fill="#131e2b" stroke="rgba(16,185,129,0.4)"/>
+  <text x="385" y="552" font-size="12" font-weight="700" fill="#34d399">Indian PSTN / Telephony Adapter</text>
+  <text x="385" y="568" font-size="9" fill="#94a3b8">Carrier Routes • Dedicated Caller ID • Vobiz / SIP</text>
+
+  <rect x="730" y="533" width="310" height="44" rx="10" fill="#131e2b" stroke="rgba(245,158,11,0.4)"/>
+  <text x="745" y="552" font-size="12" font-weight="700" fill="#fbbf24">TRAI / DLT SMS Gateway</text>
+  <text x="745" y="568" font-size="9" fill="#94a3b8">Registered Principal Entity • Consent Registry</text>
+</svg>
