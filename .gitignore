@@ -11,9 +11,16 @@ out
 
 # Environment
 .env
+.env*
 .env.local
 .env.production
 .env.development
+*.env
+
+# Temporary & Dump files
+.temp
+*.temp
+supabase/.temp/
 
 # Logs
 *.log

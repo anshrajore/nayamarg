@@ -14,6 +14,7 @@
     "@nayamarg/providers": "workspace:*",
     "@nayamarg/recruitment-orchestrator": "workspace:*",
     "@nayamarg/workflow-engine": "workspace:*",
+    "@supabase/supabase-js": "^2.119.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
     "gsap": "^3.12.7",

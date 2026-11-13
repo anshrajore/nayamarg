@@ -6,6 +6,7 @@ export type ApplicationState =
   | "CONTACTED"
   | "CALLBACK_REQUESTED"
   | "INTERESTED"
+  | "NOT_INTERESTED"
   | "QUALIFIED"
   | "SHORTLISTED"
   | "INTERVIEW_SCHEDULED"

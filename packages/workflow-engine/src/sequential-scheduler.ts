@@ -19,6 +19,14 @@ export interface SequentialLease {
   expiresAt: Date;
 }
 
+export interface CampaignLease {
+  campaignId: string;
+  leasedByWorkerId: string;
+  activeCallAttemptId: string;
+  leaseExpiresAt: Date;
+  fencingToken: number;
+}
+
 /**
  * Sequential Call Queue Scheduler (Section 6.1, 6.2, 6.3)
  * Guarantees:

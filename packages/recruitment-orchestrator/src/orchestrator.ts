@@ -340,8 +340,8 @@ export class AutonomousRecruitmentOrchestrator {
 
       case "CALLBACK_REQUESTED": {
         this.state.campaign.totalCallbacksScheduled += 1;
-        const cbDate = parsed.structuredData?.callbackRequestedAt
-          ? new Date(parsed.structuredData.callbackRequestedAt)
+        const cbDate = parsed.structuredData?.callback_time
+          ? new Date(parsed.structuredData.callback_time)
           : new Date(Date.now() + 4 * 60 * 60 * 1000); // 4 hours later fallback
 
         this.followUp.scheduleCallback(campaignId, call.candidate.id, cbDate);
