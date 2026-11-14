@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useRecruitment } from "@/lib/RecruitmentContext";
 import {
   Users,
@@ -13,12 +14,33 @@ import {
   ArrowRight,
   ShieldCheck,
   UserCheck,
+  Filter,
 } from "lucide-react";
 
-export default function EmployerCandidatesPage() {
+function EmployerCandidatesContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const stageParam = searchParams.get("stage");
+
   const { candidates, runs, shortlistCandidate, scheduleInterview, markCandidateHired } = useRecruitment();
-  const [filter, setFilter] = useState("ALL");
+  
+  // Map stageParam to internal status or filter
+  const initialFilter = stageParam === "reviewing"
+    ? "QUALIFIED"
+    : stageParam === "offer"
+    ? "INTERVIEW_SCHEDULED"
+    : stageParam === "joining"
+    ? "JOINED"
+    : "ALL";
+
+  const [filter, setFilter] = useState(initialFilter);
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(candidates[0]?.id || null);
+
+  useEffect(() => {
+    if (stageParam === "reviewing") setFilter("QUALIFIED");
+    else if (stageParam === "offer") setFilter("INTERVIEW_SCHEDULED");
+    else if (stageParam === "joining") setFilter("JOINED");
+  }, [stageParam]);
 
   const filtered = candidates.filter((c) => {
     if (filter === "ALL") return true;
@@ -26,6 +48,19 @@ export default function EmployerCandidatesPage() {
   });
 
   const selectedCandidate = candidates.find((c) => c.id === selectedCandidateId) || candidates[0];
+
+  const handleFilterClick = (st: string) => {
+    setFilter(st);
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (st === "ALL") params.delete("stage");
+    else if (st === "QUALIFIED") params.set("stage", "reviewing");
+    else if (st === "INTERVIEW_SCHEDULED") params.set("stage", "offer");
+    else if (st === "JOINED") params.set("stage", "joining");
+    else params.set("status", st.toLowerCase());
+    
+    const query = params.toString();
+    router.push(`/employer/candidates${query ? `?${query}` : ""}`);
+  };
 
   return (
     <div className="space-y-6">
@@ -41,7 +76,8 @@ export default function EmployerCandidatesPage() {
         {["ALL", "INTERESTED", "QUALIFIED", "INTERVIEW_SCHEDULED", "JOINED", "DECLINED"].map((st) => (
           <button
             key={st}
-            onClick={() => setFilter(st)}
+            type="button"
+            onClick={() => handleFilterClick(st)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-medium border transition-all ${
               filter === st
                 ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-400 font-semibold"
@@ -191,6 +227,7 @@ export default function EmployerCandidatesPage() {
             <div className="space-y-2 pt-2 border-t border-white/[0.06]">
               {selectedCandidate.status !== "INTERVIEW_SCHEDULED" && selectedCandidate.status !== "JOINED" && (
                 <button
+                  type="button"
                   onClick={() => scheduleInterview(selectedCandidate.id)}
                   className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
                 >
@@ -201,6 +238,7 @@ export default function EmployerCandidatesPage() {
 
               {selectedCandidate.status !== "JOINED" && (
                 <button
+                  type="button"
                   onClick={() => markCandidateHired(selectedCandidate.id, 9)}
                   className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
                 >
@@ -220,5 +258,13 @@ export default function EmployerCandidatesPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function EmployerCandidatesPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-xs font-mono text-gray-400">Loading Candidates...</div>}>
+      <EmployerCandidatesContent />
+    </Suspense>
   );
 }

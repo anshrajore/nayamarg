@@ -22,6 +22,10 @@ import {
   X,
   Phone,
   User,
+  Calendar,
+  AlertCircle,
+  FileText,
+  Award,
 } from "lucide-react";
 
 interface WorkerJob {
@@ -120,10 +124,9 @@ const FEATURED_JOBS: WorkerJob[] = [
   },
 ];
 
-export default function WorkerPortalPage() {
-  const [lang, setLang] = useState<"HI" | "MR" | "EN">("MR");
+export default function WorkerWorkspaceOverview() {
+  const [lang, setLang] = useState<"MR" | "HI" | "EN">("MR");
   const [activeAudioJobId, setActiveAudioJobId] = useState<string | null>(null);
-  const [consentGranted, setConsentGranted] = useState(true);
 
   // Application Modal State
   const [selectedJob, setSelectedJob] = useState<WorkerJob | null>(null);
@@ -136,11 +139,7 @@ export default function WorkerPortalPage() {
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
   const toggleAudio = (jobId: string) => {
-    if (activeAudioJobId === jobId) {
-      setActiveAudioJobId(null);
-    } else {
-      setActiveAudioJobId(jobId);
-    }
+    setActiveAudioJobId((prev) => (prev === jobId ? null : jobId));
   };
 
   const handleOpenApplyModal = (job: WorkerJob) => {
@@ -157,119 +156,211 @@ export default function WorkerPortalPage() {
       setIsSubmitting(false);
       setSubmissionSuccess(true);
       setAppliedJobs((prev) => [...prev, selectedJob.id]);
-    }, 800);
+    }, 600);
   };
 
   const copy = {
     MR: {
-      pageTitle: "तुमच्या जवळच्या सत्यापित फॅक्टरी नोकऱ्या",
-      pageSubtitle: "मशिन ऑपरेटर, फिटर, इलेक्ट्रिशियन आणि वेल्डर कामे थेट तुमच्या मातृभाषेत.",
+      overview: "मुख्य पृष्ठ",
+      workspace: "कामगार कार्यस्थळ",
+      greeting: "शुभ सकाळ, रमेश",
+      greetingSub: "तुमची चालू नोकरी प्रक्रिया, मुलाखत आणि पुढील पावले.",
+      applicationsCount: "अर्ज",
+      interviewsCount: "मुलाखती",
+      offersCount: "ऑफर",
+      myApplications: "तुमचे सक्रिय अर्ज",
+      recommendedJobs: "तुमच्या जवळच्या सत्यापित फॅक्टरी नोकऱ्या (१० किमी आत)",
       vacanciesNotice: "नाशिक परिसरातील थेट कंपनी भरती • ० रुपये फी",
       applyBtn: "अर्ज करा (Apply Now)",
       appliedBtn: "अर्ज नोंदवला गेला ✓",
       listenVoice: "ऑडिओ ऐका",
       playing: "आवाज चालू आहे...",
+      nextActionTitle: "पुढील कृती आणि अपडेट्स",
       modalTitle: "नोकरीसाठी अर्ज नोंदणी",
-      fullNameLabel: "तुमचे पूर्ण नाव",
-      mobileLabel: "मोबाईल नंबर (कॉलसाठी)",
-      expLabel: "कामाचा अनुभव",
-      shiftLabel: "शिफ्ट पसंती",
       submitBtn: "अर्ज पूर्ण करा (Confirm & Apply)",
       successMsg: "तुमचा अर्ज यशस्वीरीत्या नोंदवला गेला आहे! नयामार्ग कडून तुम्हाला ५ मिनिटांत फोन कॉल येईल.",
-      callUs: "मदतीसाठी कॉल करा: १८००-२००-६२९२ (टोल फ्री)",
-      consentTitle: "ऑटोमॅटिक व्हॉइस कॉल संमती (TRAI Consent)",
-      consentDesc: "नयामार्ग च्या AI असिस्टंट कडून नोकरीच्या पडताळणीसाठी फोन कॉल स्वीकारण्यास संमती.",
     },
     HI: {
-      pageTitle: "आपके नज़दीक सत्यापित फैक्ट्री नौकरियाँ",
-      pageSubtitle: "मशीन ऑपरेटर, फिटर, इलेक्ट्रीशियन और वेल्डर काम सीधे अपनी भाषा में।",
+      overview: "अवलोकन",
+      workspace: "कार्यस्थल",
+      greeting: "शुभ प्रभात, रमेश",
+      greetingSub: "आपकी वर्तमान नौकरी गतिविधियाँ, साक्षात्कार और आगामी कदम।",
+      applicationsCount: "आवेदन",
+      interviewsCount: "साक्षात्कार",
+      offersCount: "ऑफर",
+      myApplications: "आपके सक्रिय आवेदन",
+      recommendedJobs: "आपके नज़दीक सत्यापित फैक्ट्री नौकरियाँ (१० किमी)",
       vacanciesNotice: "नासिक क्षेत्र में सीधी कंपनी भर्ती • ० रुपये शुल्क",
       applyBtn: "आवेदन करें (Apply Now)",
       appliedBtn: "आवेदन दर्ज हुआ ✓",
       listenVoice: "ऑडियो सुनें",
       playing: "आवाज चल रही है...",
+      nextActionTitle: "अगले कदम और अपडेट",
       modalTitle: "नौकरी के लिए आवेदन",
-      fullNameLabel: "आपका पूरा नाम",
-      mobileLabel: "मोबाइल नंबर (कॉल के लिए)",
-      expLabel: "काम का अनुभव",
-      shiftLabel: "शिफ्ट पसंद",
       submitBtn: "आवेदन पूरा करें (Confirm & Apply)",
       successMsg: "आपका आवेदन सफलतापूर्वक दर्ज हो गया है! नयामार्ग से आपको ५ मिनट में फोन कॉल आएगा।",
-      callUs: "मदद के लिए कॉल करें: १८००-२००-६२९२ (टोल फ्री)",
-      consentTitle: "ऑटोमैटिक वॉइस कॉल सहमति (TRAI Consent)",
-      consentDesc: "नयामार्ग के AI असिस्टेंट से जॉब वेरिफिकेशन के लिए फोन कॉल प्राप्त करने की सहमति।",
     },
     EN: {
-      pageTitle: "Verified Manufacturing Factory Jobs Near You",
-      pageSubtitle: "Machine Operator, Fitter, Electrician and Welder roles directly in Maharashtra.",
-      vacanciesNotice: "Direct Factory Hiring in Nashik Cluster • Zero Fees for Workers",
+      overview: "Overview",
+      workspace: "Worker workspace",
+      greeting: "Good morning, Ramesh",
+      greetingSub: "Your employment activity and next steps.",
+      applicationsCount: "Applications",
+      interviewsCount: "Interviews",
+      offersCount: "Offers",
+      myApplications: "Your applications",
+      recommendedJobs: "Recommended opportunities (within 10 km)",
+      vacanciesNotice: "Direct Factory Hiring in Nashik Cluster • Zero Fees",
       applyBtn: "Apply Now",
-      appliedBtn: "Applied & Queued ✓",
+      appliedBtn: "Applied ✓",
       listenVoice: "Listen Audio",
       playing: "Playing Voice Summary...",
+      nextActionTitle: "Next action and recent updates",
       modalTitle: "Submit Job Application",
-      fullNameLabel: "Your Full Name",
-      mobileLabel: "Mobile Phone (For Interview Call)",
-      expLabel: "Relevant Work Experience",
-      shiftLabel: "Preferred Working Shift",
-      submitBtn: "Confirm & Submit Application",
-      successMsg: "Application successfully submitted! NayaMarg's voice agent will contact you within 5 minutes.",
-      callUs: "Toll-Free Helpline: 1800-200-6292",
-      consentTitle: "Automated Voice Call Consent (TRAI DLT)",
-      consentDesc: "Consent to receive automated voice qualification calls for local industrial job matches.",
+      submitBtn: "Confirm & Apply",
+      successMsg: "Application successfully submitted! You will receive a verification call within 5 minutes.",
     },
   }[lang];
 
   return (
-    <div className="min-h-screen bg-[#07090F] text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-black">
-      {/* Top Header */}
-      <header className="sticky top-0 z-30 bg-[#0B0E17]/95 backdrop-blur-xl border-b border-white/[0.08] px-4 py-3 sm:py-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-amber-400 transition-colors">
-              nayamarg<span className="text-amber-400">.</span>
-            </span>
-            <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/25 font-bold">
-              कामगार ॲप
-            </span>
-          </Link>
-
-          {/* Language Switcher */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/5 text-xs font-semibold">
-            <Globe className="w-3.5 h-3.5 text-amber-400 ml-1.5 mr-0.5" />
-            {(["MR", "HI", "EN"] as const).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                  lang === l
-                    ? "bg-amber-500 text-black shadow font-black"
-                    : "text-gray-400 hover:text-white"
-                }`}
-              >
-                {l === "MR" ? "मराठी" : l === "HI" ? "हिंदी" : "EN"}
-              </button>
-            ))}
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content Area */}
-      <main className="max-w-4xl mx-auto px-4 py-6 w-full space-y-6 flex-1">
-        {/* Vernacular Hero Notice Banner */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-transparent border border-amber-500/25 space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold uppercase tracking-wider">
-              {copy.vacanciesNotice}
-            </span>
+    <div className="space-y-8">
+      {/* 1. Header Section */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-mono text-gray-400 mb-1">
+            <span>{copy.overview}</span>
+            <span>/</span>
+            <span className="text-amber-400 font-semibold">{copy.workspace}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            {copy.pageTitle}
+            {copy.greeting}
           </h1>
-          <p className="text-xs sm:text-sm text-gray-300">{copy.pageSubtitle}</p>
+          <p className="text-xs sm:text-sm text-gray-400 mt-1">
+            {copy.greetingSub}
+          </p>
         </div>
 
-        {/* Job Listings Feed */}
+        {/* Vernacular Language Switcher */}
+        <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-white/5 text-xs font-semibold self-start sm:self-center">
+          <Globe className="w-3.5 h-3.5 text-amber-400 ml-1.5 mr-0.5" />
+          {(["MR", "HI", "EN"] as const).map((l) => (
+            <button
+              key={l}
+              onClick={() => setLang(l)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                lang === l
+                  ? "bg-amber-500 text-black shadow font-black"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              {l === "MR" ? "मराठी" : l === "HI" ? "हिंदी" : "EN"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 2. Three Summary Counters (Spec Section 4) */}
+      <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#0D1018] border border-white/[0.08] hover:border-amber-500/30 transition-all">
+          <div className="flex items-center justify-between text-gray-400 text-xs">
+            <span>{copy.applicationsCount}</span>
+            <FileText className="w-4 h-4 text-gray-400" />
+          </div>
+          <div className="text-2xl sm:text-4xl font-extrabold text-white mt-2 font-mono">
+            3
+          </div>
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1">2 in review · 1 shortlisted</p>
+        </div>
+
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#0D1018] border border-white/[0.08] hover:border-emerald-500/30 transition-all">
+          <div className="flex items-center justify-between text-gray-400 text-xs">
+            <span>{copy.interviewsCount}</span>
+            <Calendar className="w-4 h-4 text-emerald-400" />
+          </div>
+          <div className="text-2xl sm:text-4xl font-extrabold text-emerald-400 mt-2 font-mono">
+            1
+          </div>
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1">Nov 18, 10:30 AM (Satpur)</p>
+        </div>
+
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#0D1018] border border-white/[0.08] hover:border-blue-500/30 transition-all">
+          <div className="flex items-center justify-between text-gray-400 text-xs">
+            <span>{copy.offersCount}</span>
+            <Award className="w-4 h-4 text-blue-400" />
+          </div>
+          <div className="text-2xl sm:text-4xl font-extrabold text-blue-400 mt-2 font-mono">
+            0
+          </div>
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1">Awaiting interview round</p>
+        </div>
+      </div>
+
+      {/* 3. Your Applications Section */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>{copy.myApplications}</span>
+            <span className="text-xs font-mono font-medium text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+              3 Active
+            </span>
+          </h2>
+          <Link href="/worker/applications" className="text-xs text-amber-400 hover:underline">
+            View all →
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-all space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                Interview Scheduled
+              </span>
+              <span className="text-[10px] text-gray-500">Nov 18</span>
+            </div>
+            <div className="font-bold text-white text-sm">CNC Machine Operator</div>
+            <div className="text-xs text-gray-400">Precision Forge & Tools Ltd.</div>
+            <div className="text-[11px] text-emerald-400 font-mono">Round 2 · Plant Visit · Satpur</div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-all space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">
+                Under Review
+              </span>
+              <span className="text-[10px] text-gray-500">2d ago</span>
+            </div>
+            <div className="font-bold text-white text-sm">Industrial Electrician</div>
+            <div className="text-xs text-gray-400">Mahindra Heavy Engineering</div>
+            <div className="text-[11px] text-gray-400 font-mono">Employer evaluating profile</div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-all space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">
+                Voice Screen Passed
+              </span>
+              <span className="text-[10px] text-gray-500">3d ago</span>
+            </div>
+            <div className="font-bold text-white text-sm">MIG / TIG Welder</div>
+            <div className="text-xs text-gray-400">Nashik Auto Components</div>
+            <div className="text-[11px] text-amber-300 font-mono">AI Verification Score: 94%</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Recommended Opportunities (Exact Card Design from Image 1) */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              {copy.recommendedJobs}
+            </h2>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {copy.vacanciesNotice}
+            </p>
+          </div>
+        </div>
+
         <div className="space-y-4">
           {FEATURED_JOBS.map((job) => {
             const isApplied = appliedJobs.includes(job.id);
@@ -288,7 +379,7 @@ export default function WorkerPortalPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-1">
                     <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20">
-                      {job.vacancies} जागा उपलब्ध (Vacancies)
+                      {job.vacancies} जागा उपलब्ध (VACANCIES)
                     </span>
                     <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mt-1">
                       {displayTitle}
@@ -395,162 +486,139 @@ export default function WorkerPortalPage() {
             );
           })}
         </div>
+      </div>
 
-        {/* Telecom & Voice Consent Policy Block */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
-          <div className="space-y-1">
-            <span className="font-bold text-gray-300 block">{copy.consentTitle}</span>
-            <p className="text-[11px] text-gray-400">{copy.consentDesc}</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setConsentGranted(!consentGranted)}
-            className={`px-4 py-2 rounded-xl font-bold text-xs transition-all border shrink-0 ${
-              consentGranted
-                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                : "bg-red-500/10 text-red-400 border-red-500/30"
-            }`}
-          >
-            {consentGranted ? "संमती दिली (Consent Active ✓)" : "बंद करा (Opt-out)"}
-          </button>
-        </div>
-      </main>
-
-      {/* Pro Worker Application Modal */}
-      {selectedJob && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fadeIn">
-          <div className="w-full max-w-lg rounded-t-3xl sm:rounded-3xl bg-[#0D1018] border border-white/10 shadow-2xl p-6 sm:p-8 space-y-5 animate-slideUp">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-              <div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20">
-                  {selectedJob.employer}
-                </span>
-                <h3 className="text-lg font-bold text-white mt-1">
-                  {lang === "MR" ? selectedJob.titleMR : lang === "HI" ? selectedJob.titleHI : selectedJob.title}
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedJob(null)}
-                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
+      {/* 5. Next Action and Recent Updates Feed (Spec Section 4) */}
+      <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-3">
+        <h3 className="text-sm font-bold text-white flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-amber-400" />
+          <span>{copy.nextActionTitle}</span>
+        </h3>
+        <div className="space-y-2 text-xs text-gray-300">
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold text-white block">Interview Scheduled at Precision Forge</span>
+              Bring your original Aadhaar card and ITI trade certificates to Satpur MIDC Unit 1 on Monday, Nov 18, 10:30 AM.
             </div>
+          </div>
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
+            <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold text-white block">Aadhaar e-KYC Complete</span>
+              Your identity has been verified. Verified candidate badge is now visible to recruiters.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Application Confirmation Modal */}
+      {selectedJob && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-lg rounded-3xl bg-[#0F121C] border border-white/10 p-6 space-y-5 shadow-2xl relative">
+            <button
+              onClick={() => setSelectedJob(null)}
+              className="absolute top-5 right-5 text-gray-400 hover:text-white p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
 
             {submissionSuccess ? (
               <div className="py-6 text-center space-y-4">
-                <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400">
+                <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <div className="space-y-1">
-                  <h4 className="text-base font-bold text-white">अर्ज यशस्वीरीत्या पाठवला!</h4>
-                  <p className="text-xs text-gray-300 max-w-sm mx-auto">{copy.successMsg}</p>
-                </div>
+                <h3 className="text-xl font-bold text-white">अर्ज यशस्वीरीत्या नोंदवला!</h3>
+                <p className="text-xs text-gray-300 max-w-sm mx-auto">
+                  {copy.successMsg}
+                </p>
                 <button
                   type="button"
                   onClick={() => setSelectedJob(null)}
-                  className="px-6 py-2.5 rounded-xl bg-white text-black font-extrabold text-xs hover:bg-gray-200 transition-colors"
+                  className="px-6 py-2.5 rounded-full bg-emerald-500 text-black font-extrabold text-xs"
                 >
-                  बंद करा (Done)
+                  पूर्ण झाले (Close)
                 </button>
               </div>
             ) : (
               <form onSubmit={handleConfirmApply} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-gray-300">
-                    {copy.fullNameLabel}
-                  </label>
-                  <div className="relative flex items-center">
-                    <User className="w-4 h-4 text-gray-500 absolute left-3.5" />
+                <div>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20">
+                    थेट कंपनी अर्ज
+                  </span>
+                  <h3 className="text-lg font-bold text-white mt-1">
+                    {lang === "MR" ? selectedJob.titleMR : lang === "HI" ? selectedJob.titleHI : selectedJob.title}
+                  </h3>
+                  <p className="text-xs text-gray-400">{selectedJob.employer} · {selectedJob.location}</p>
+                </div>
+
+                <div className="space-y-3 pt-2">
+                  <div>
+                    <label className="text-xs text-gray-300 block mb-1">पूर्ण नाव (Full Name)</label>
                     <input
                       type="text"
-                      required
                       value={applicantName}
                       onChange={(e) => setApplicantName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-xs font-medium focus:outline-none focus:border-amber-400"
+                      required
+                      className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white text-xs focus:outline-none focus:border-amber-500"
                     />
                   </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-gray-300">
-                    {copy.mobileLabel}
-                  </label>
-                  <div className="relative flex items-center">
-                    <span className="absolute left-3.5 text-xs text-gray-400 font-mono font-bold border-r border-white/10 pr-2">
-                      +91
-                    </span>
+                  <div>
+                    <label className="text-xs text-gray-300 block mb-1">मोबाईल नंबर (Phone for Interview Call)</label>
                     <input
                       type="tel"
-                      required
-                      maxLength={10}
                       value={applicantPhone}
-                      onChange={(e) => setApplicantPhone(e.target.value.replace(/\D/g, ""))}
-                      className="w-full pl-16 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-xs font-mono font-bold focus:outline-none focus:border-amber-400"
+                      onChange={(e) => setApplicantPhone(e.target.value)}
+                      required
+                      className="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-amber-500"
                     />
                   </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-xs text-gray-300 block mb-1">अनुभव (Experience)</label>
+                      <select
+                        value={experience}
+                        onChange={(e) => setExperience(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl bg-[#141824] border border-white/10 text-white text-xs"
+                      >
+                        <option value="fresher">Fresher (नवीन)</option>
+                        <option value="1-2 years">१-२ वर्षे</option>
+                        <option value="2-5 years">२-५ वर्षे</option>
+                        <option value="5+ years">५+ वर्षे</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-xs text-gray-300 block mb-1">शिफ्ट (Shift)</label>
+                      <select
+                        value={shiftPreference}
+                        onChange={(e) => setShiftPreference(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl bg-[#141824] border border-white/10 text-white text-xs"
+                      >
+                        <option value="day">डे शिफ्ट (Day)</option>
+                        <option value="night">नाईट शिफ्ट (Night)</option>
+                        <option value="any">कोणतीही (Any)</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-300">{copy.expLabel}</label>
-                    <select
-                      value={experience}
-                      onChange={(e) => setExperience(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl bg-[#141824] border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
-                    >
-                      <option value="fresher">Fresher (नवीन कामगार)</option>
-                      <option value="1-2 years">1-2 वर्षे (Years)</option>
-                      <option value="2-5 years">2-5 वर्षे (Years)</option>
-                      <option value="5+ years">5+ वर्षे (Years)</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-300">{copy.shiftLabel}</label>
-                    <select
-                      value={shiftPreference}
-                      onChange={(e) => setShiftPreference(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl bg-[#141824] border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
-                    >
-                      <option value="day">Day Shift (दिवसा)</option>
-                      <option value="rotational">Rotational (कोणतीही)</option>
-                      <option value="night">Night Shift (रात्र)</option>
-                    </select>
-                  </div>
+                <div className="pt-3">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition-all shadow-lg active:scale-95"
+                  >
+                    {isSubmitting ? "अर्ज नोंदवत आहे..." : copy.submitBtn}
+                  </button>
                 </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition-all shadow-lg flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    <span className="animate-pulse">नोंदणी करत आहे (Submitting)...</span>
-                  ) : (
-                    <>
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>{copy.submitBtn}</span>
-                    </>
-                  )}
-                </button>
               </form>
             )}
           </div>
         </div>
       )}
-
-      {/* Footer Helpline */}
-      <footer className="w-full border-t border-white/[0.06] bg-[#0A0D14] px-4 py-5 text-center text-xs text-gray-400 font-mono">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>{copy.callUs}</span>
-          <span className="text-[11px] text-gray-500">
-            © 2026 NayaMarg • कामगारांसाठी १००% मोफत व सुरक्षित सेवा
-          </span>
-        </div>
-      </footer>
     </div>
   );
 }
