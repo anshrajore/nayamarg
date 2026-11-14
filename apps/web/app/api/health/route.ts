@@ -7,16 +7,13 @@ export async function GET() {
   let latencyMs = 0;
 
   try {
-    // Perform simple ping to Supabase PostgREST
-    const { data, error } = await supabaseAdmin.from("_health_check_nonexistent").select("*").limit(1);
+    // Query the live profiles table in Supabase
+    const { count, error } = await supabaseAdmin.from("profiles").select("*", { count: "exact", head: true });
     
-    // An error code indicating table does not exist still confirms active database connection
-    if (error && error.code === "PGRST204" || error?.message?.includes("relation") || error?.message?.includes("find")) {
-      dbStatus = "CONNECTED";
-    } else if (error) {
-      dbStatus = "CONNECTED_WITH_NOTICE";
+    if (error) {
+      dbStatus = "CONNECTED_WITH_NOTICE: " + error.message;
     } else {
-      dbStatus = "CONNECTED";
+      dbStatus = "CONNECTED_LIVE_TABLES_READY";
     }
   } catch (err: any) {
     dbStatus = "ERROR: " + (err.message || String(err));
