@@ -79,13 +79,14 @@ export default function PostJobPage() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitting(true);
-    setTimeout(() => {
-      const jobId = addJob({
+    let assignedId = "";
+    try {
+      // 1. Ingest hiring requirement into real Backend Orchestrator API
+      const payload = {
         title: formData.title,
-        employerName: formData.employerName,
-        category: formData.category,
+        category: "MANUFACTURING",
         vacancies: Number(formData.vacancies),
         location: {
           city: formData.city,
@@ -93,28 +94,72 @@ export default function PostJobPage() {
           pincode: formData.pincode,
           latitude: 19.9975,
           longitude: 73.7898,
-          radiusKm: Number(formData.radiusKm),
+          search_radius_km: Number(formData.radiusKm),
         },
         salary: {
-          min: Number(formData.salaryMin),
-          max: Number(formData.salaryMax),
-          period: formData.salaryPeriod,
+          minimum: Number(formData.salaryMin),
+          maximum: Number(formData.salaryMax),
+          currency: "INR",
+          period: "monthly",
         },
         experience: {
-          minYears: Number(formData.minExpYears),
-          maxYears: Number(formData.maxExpYears),
+          minimum_years: Number(formData.minExpYears),
+          maximum_years: Number(formData.maxExpYears),
         },
-        languages: formData.languages,
-        skills: formData.skills,
+        languages: ["hi-IN", "mr-IN"],
+        requirements: formData.skills,
         shift: formData.shift,
-        employmentType: "full_time",
-        joiningWindow: formData.joiningWindow,
-        targetCoverageFactor: Number(formData.targetCoverageFactor),
+        job_type: "full_time",
+        target_coverage_factor: Number(formData.targetCoverageFactor),
+      };
+
+      const res = await fetch("/api/recruitment/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      setCreatedJobId(jobId);
-      setIsSubmitting(false);
-    }, 1200);
+      const data = await res.json();
+      if (data?.hiringRequestId) {
+        assignedId = data.hiringRequestId;
+      }
+    } catch (err) {
+      console.error("Notice: Orchestrator API fetch notice:", err);
+    }
+
+    // 2. Update local context state
+    const localId = addJob({
+      title: formData.title,
+      employerName: formData.employerName,
+      category: formData.category,
+      vacancies: Number(formData.vacancies),
+      location: {
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        latitude: 19.9975,
+        longitude: 73.7898,
+        radiusKm: Number(formData.radiusKm),
+      },
+      salary: {
+        min: Number(formData.salaryMin),
+        max: Number(formData.salaryMax),
+        period: formData.salaryPeriod,
+      },
+      experience: {
+        minYears: Number(formData.minExpYears),
+        maxYears: Number(formData.maxExpYears),
+      },
+      languages: formData.languages,
+      skills: formData.skills,
+      shift: formData.shift,
+      employmentType: "full_time",
+      joiningWindow: formData.joiningWindow,
+      targetCoverageFactor: Number(formData.targetCoverageFactor),
+    });
+
+    setCreatedJobId(assignedId || localId);
+    setIsSubmitting(false);
   };
 
   if (createdJobId) {

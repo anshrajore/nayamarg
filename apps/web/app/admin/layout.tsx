@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRecruitment } from "@/lib/RecruitmentContext";
 import {
   ShieldAlert,
   Activity,
@@ -18,10 +19,12 @@ import {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { runs } = useRecruitment();
+  const currentRunId = runs[0]?.id || "run-9001";
 
   const navItems = [
     { label: "Command Centre", href: "/admin", icon: Activity },
-    { label: "Recruitment Runs", href: "/admin/runs/run-9001", icon: Layers },
+    { label: "Recruitment Runs", href: `/admin/runs/${currentRunId}`, icon: Layers },
     { label: "Live Call Monitor", href: "/admin/calls/live", icon: Radio, pulse: true },
     { label: "Exception Inbox", href: "/admin/exceptions", icon: AlertOctagon, badge: "3" },
   ];
