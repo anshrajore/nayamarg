@@ -181,7 +181,7 @@ export default function EmployerOverview() {
                       <span>•</span>
                       <span>Target Pool: {run.targetCandidatePool}</span>
                       <span>•</span>
-                      <span>Batch #{run.currentBatch}</span>
+                      <span className="text-emerald-400 font-semibold font-mono">48 Total Applied</span>
                     </div>
                   </div>
 
@@ -282,10 +282,10 @@ export default function EmployerOverview() {
                     </span>
                   </div>
                   <Link
-                    href={`/admin/runs/${run.id}`}
-                    className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1"
+                    href="/employer/candidates"
+                    className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1"
                   >
-                    <span>Run Details</span>
+                    <span>View Applicants & Dossiers</span>
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>

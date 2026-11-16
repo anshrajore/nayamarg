@@ -168,10 +168,10 @@ export default function MyJobsPage() {
                         </button>
                       )}
                       <Link
-                        href={`/admin/runs/${run.id}`}
-                        className="px-3.5 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 text-xs font-semibold flex items-center gap-1.5 border border-blue-500/30 transition-all"
+                        href="/employer/candidates"
+                        className="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 border border-emerald-500/30 transition-all"
                       >
-                        <span>Audit Run</span>
+                        <span>View Applicants</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
                     </>

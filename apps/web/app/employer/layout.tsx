@@ -93,14 +93,14 @@ export default function EmployerLayout({ children }: { children: React.ReactNode
         {/* Footer shortcuts */}
         <div className="pt-6 border-t border-white/[0.06] space-y-3">
           <Link
-            href="/admin"
-            className="flex items-center justify-between p-3 rounded-xl bg-blue-950/20 border border-blue-500/20 text-blue-300 text-xs hover:bg-blue-900/30 transition-all"
+            href="/employer/profile"
+            className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.08] text-gray-300 text-xs hover:bg-emerald-500/10 hover:text-emerald-300 hover:border-emerald-500/30 transition-all"
           >
             <div className="flex items-center gap-2">
-              <ShieldAlert className="w-3.5 h-3.5 text-blue-400" />
-              <span>Admin Console</span>
+              <Building2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Company Profile</span>
             </div>
-            <ArrowUpRight className="w-3.5 h-3.5 text-blue-400" />
+            <ArrowUpRight className="w-3.5 h-3.5 text-gray-400" />
           </Link>
           <div className="text-[11px] text-gray-500 flex items-center justify-between px-1">
             <span>NayaMarg 2.0 Engine</span>
