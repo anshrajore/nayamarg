@@ -1,9 +1,54 @@
 import { NextRequest, NextResponse } from "next/server";
 import { orchestratorManager } from "@/lib/recruitment/backend-orchestrator";
+import crypto from "crypto";
+
+function verifyWebhookSecurity(req: NextRequest, rawBody: string): boolean {
+  const secret = process.env.SARVAM_WEBHOOK_SECRET;
+
+  // In test / dev environments without explicit secret set, allow fallback
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("SECURITY VIOLATION: SARVAM_WEBHOOK_SECRET must be set in production.");
+      return false;
+    }
+    return true;
+  }
+
+  // Check 1: Shared secret header
+  const authHeader = req.headers.get("x-sarvam-webhook-secret") || req.headers.get("authorization");
+  if (authHeader && (authHeader === secret || authHeader === `Bearer ${secret}`)) {
+    return true;
+  }
+
+  // Check 2: HMAC-SHA256 signature verification
+  const signature = req.headers.get("x-sarvam-signature");
+  if (!signature) {
+    return false;
+  }
+
+  const computedHmac = crypto.createHmac("sha256", secret).update(rawBody).digest("hex");
+  try {
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(computedHmac));
+  } catch {
+    return false;
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const rawBody = await req.text();
+
+    if (!verifyWebhookSecurity(req, rawBody)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Unauthorized: Invalid or missing webhook authentication signature.",
+        },
+        { status: 401 }
+      );
+    }
+
+    const body = JSON.parse(rawBody);
 
     const {
       queueId,

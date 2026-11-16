@@ -20,14 +20,14 @@ import {
 } from "lucide-react";
 
 export function Navbar({
-  activeTab,
-  onTabChange,
+  activeTab = "all",
+  onTabChange = () => {},
 }: {
   activeTab?: "all" | "employer" | "worker";
   onTabChange?: (tab: "all" | "employer" | "worker") => void;
 }) {
+  const { role, logout } = useAuthRole();
   const pathname = usePathname();
-  const { role, logout, employerProfile, workerProfile, adminProfile } = useAuthRole();
   const [lang, setLang] = useState<"EN" | "HI" | "MR">("EN");
 
   return (
@@ -35,7 +35,18 @@ export function Navbar({
       <nav className="pointer-events-auto flex items-center justify-between gap-4 px-6 py-3 rounded-full bg-[#0D0F14]/90 backdrop-blur-2xl border border-white/[0.08] shadow-2xl max-w-6xl w-full">
         {/* Brand Logo & Role Tag */}
         <div className="flex items-center gap-2.5 shrink-0">
-          <Link href={role === "employer" ? "/employer" : role === "worker" ? "/worker" : role === "admin" ? "/admin" : "/"} className="flex items-center gap-1.5 group">
+          <Link
+            href={
+              role === "employer"
+                ? "/employer"
+                : role === "worker"
+                ? "/worker"
+                : role === "admin"
+                ? "/admin"
+                : "/"
+            }
+            className="flex items-center gap-1.5 group"
+          >
             <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-emerald-400 transition-colors">
               nayamarg<span className="text-emerald-400">.</span>
             </span>
@@ -64,18 +75,31 @@ export function Navbar({
             <>
               <Link
                 href="/"
+                onClick={() => onTabChange("all")}
                 className={`px-4 py-1.5 rounded-full transition-all ${
                   pathname === "/" ? "bg-white/10 text-white font-medium" : "hover:text-white"
                 }`}
               >
                 Home
               </Link>
-              <a href="/#employer" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
+              <button
+                type="button"
+                onClick={() => onTabChange("employer")}
+                className={`px-4 py-1.5 rounded-full transition-all ${
+                  activeTab === "employer" ? "bg-white/10 text-white font-medium" : "hover:text-white"
+                }`}
+              >
                 For Employers
-              </a>
-              <a href="/#worker" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
+              </button>
+              <button
+                type="button"
+                onClick={() => onTabChange("worker")}
+                className={`px-4 py-1.5 rounded-full transition-all ${
+                  activeTab === "worker" ? "bg-white/10 text-white font-medium" : "hover:text-white"
+                }`}
+              >
                 Find Work
-              </a>
+              </button>
               <a href="/#how-it-works" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
                 How It Works
               </a>
@@ -91,7 +115,9 @@ export function Navbar({
               <Link
                 href="/employer"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/employer" ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20" : "hover:text-white"
+                  pathname === "/employer"
+                    ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20"
+                    : "hover:text-white"
                 }`}
               >
                 Dashboard
@@ -99,31 +125,39 @@ export function Navbar({
               <Link
                 href="/employer/jobs/new"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/employer/jobs/new" ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20" : "hover:text-white"
+                  pathname === "/employer/jobs/new"
+                    ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20"
+                    : "hover:text-white"
                 }`}
               >
-                Post a Job
-              </Link>
-              <Link
-                href="/employer/jobs"
-                className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/employer/jobs" ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20" : "hover:text-white"
-                }`}
-              >
-                My Jobs
+                Post Job
               </Link>
               <Link
                 href="/employer/candidates"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/employer/candidates" ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20" : "hover:text-white"
+                  pathname === "/employer/candidates"
+                    ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20"
+                    : "hover:text-white"
                 }`}
               >
-                Applicants & Pipeline
+                Candidates & Audio
+              </Link>
+              <Link
+                href="/employer/interviews"
+                className={`px-3.5 py-1.5 rounded-full transition-all ${
+                  pathname === "/employer/interviews"
+                    ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20"
+                    : "hover:text-white"
+                }`}
+              >
+                Interviews
               </Link>
               <Link
                 href="/employer/reports"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/employer/reports" ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20" : "hover:text-white"
+                  pathname === "/employer/reports"
+                    ? "bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/20"
+                    : "hover:text-white"
                 }`}
               >
                 Reports
@@ -131,99 +165,105 @@ export function Navbar({
             </>
           )}
 
-          {/* WORKER ROLE: Blue-collar Trade Tools only (NO Employer Portal, NO Admin Console) */}
+          {/* WORKER ROLE: Blue-Collar Portal only (NO Employer Console, NO Admin Console) */}
           {role === "worker" && (
             <>
               <Link
                 href="/worker"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/worker" ? "bg-amber-500/15 text-amber-300 font-semibold border border-amber-500/20" : "hover:text-white"
+                  pathname === "/worker"
+                    ? "bg-amber-500/15 text-amber-300 font-semibold border border-amber-500/20"
+                    : "hover:text-white"
                 }`}
               >
-                Find Jobs (नोकऱ्या)
+                कामाचे पर्याय (Jobs)
               </Link>
               <Link
                 href="/worker/applications"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/worker/applications" ? "bg-amber-500/15 text-amber-300 font-semibold border border-amber-500/20" : "hover:text-white"
+                  pathname === "/worker/applications"
+                    ? "bg-amber-500/15 text-amber-300 font-semibold border border-amber-500/20"
+                    : "hover:text-white"
                 }`}
               >
-                My Applications
+                माझे अर्ज (Applications)
               </Link>
-              <a
-                href="/worker#audio-assistant"
-                className="px-3.5 py-1.5 rounded-full hover:text-white transition-all flex items-center gap-1.5"
+              <Link
+                href="/worker/documents"
+                className={`px-3.5 py-1.5 rounded-full transition-all ${
+                  pathname === "/worker/documents"
+                    ? "bg-amber-500/15 text-amber-300 font-semibold border border-amber-500/20"
+                    : "hover:text-white"
+                }`}
               >
-                <Volume2 className="w-3.5 h-3.5 text-amber-400" />
-                <span>Voice Assistant</span>
-              </a>
+                कागदपत्रे (KYC)
+              </Link>
             </>
           )}
 
-          {/* ADMIN ROLE: Internal Platform Operations only */}
+          {/* ADMIN ROLE: High-Security Operations only */}
           {role === "admin" && (
             <>
               <Link
                 href="/admin"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/admin" ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30" : "hover:text-white"
+                  pathname === "/admin"
+                    ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30"
+                    : "hover:text-white"
                 }`}
               >
                 Command Centre
               </Link>
               <Link
-                href="/admin/runs/run-9001"
-                className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname.startsWith("/admin/runs") ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30" : "hover:text-white"
-                }`}
-              >
-                Recruitment Runs
-              </Link>
-              <Link
                 href="/admin/calls/live"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/admin/calls/live" ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30" : "hover:text-white"
+                  pathname === "/admin/calls/live"
+                    ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30"
+                    : "hover:text-white"
                 }`}
               >
-                Live Telemetry
+                Live Calls
               </Link>
               <Link
                 href="/admin/exceptions"
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
-                  pathname === "/admin/exceptions" ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30" : "hover:text-white"
+                  pathname === "/admin/exceptions"
+                    ? "bg-blue-600/20 text-blue-300 font-semibold border border-blue-500/30"
+                    : "hover:text-white"
                 }`}
               >
-                Exceptions (3)
+                Fencing & Exceptions
               </Link>
             </>
           )}
         </div>
 
-        {/* Right CTA Actions according to Role */}
-        <div className="flex items-center gap-3 shrink-0">
-          {/* Guest Action: Public Sign In & Hire Talent */}
+        {/* Right Action Center */}
+        <div className="flex items-center gap-3">
+          {/* Vernacular Language Switcher */}
+          <div className="flex items-center gap-1 text-[11px] font-mono text-gray-400 bg-white/[0.03] px-2.5 py-1 rounded-full border border-white/5">
+            <Globe className="w-3 h-3 text-gray-400 mr-0.5" />
+            <button
+              onClick={() => setLang(lang === "EN" ? "HI" : lang === "HI" ? "MR" : "EN")}
+              className="text-white hover:text-emerald-400 transition-colors font-semibold"
+            >
+              {lang}
+            </button>
+          </div>
+
+          {/* Guest Role Actions: Sign In & Hire Talent */}
           {role === "guest" && (
             <>
-              <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono text-gray-400 bg-white/[0.03] px-2.5 py-1 rounded-full border border-white/5">
-                <Globe className="w-3 h-3 text-gray-400 mr-0.5" />
-                <button
-                  onClick={() => setLang(lang === "EN" ? "HI" : lang === "HI" ? "MR" : "EN")}
-                  className="text-white hover:text-emerald-400 transition-colors font-semibold"
-                >
-                  {lang}
-                </button>
-              </div>
-
               <Link
                 href="/login"
-                className="text-xs font-semibold text-gray-300 hover:text-white transition-colors"
+                className="hidden sm:inline-block text-xs font-medium text-gray-300 hover:text-white transition-colors"
               >
                 Sign In
               </Link>
 
               <Link
-                href="/login?role=employer"
-                className="px-4 py-2 rounded-full bg-emerald-500 text-black text-xs font-extrabold hover:bg-emerald-400 transition-all shadow-lg active:scale-95 flex items-center gap-1.5"
+                href="/employer/jobs/new"
+                className="px-4 py-2 rounded-full bg-white text-black text-xs font-bold hover:bg-gray-200 transition-all shadow-lg active:scale-95 flex items-center gap-1.5"
               >
                 <span>Hire Talent</span>
                 <ArrowRight className="w-3 h-3" />
@@ -231,7 +271,7 @@ export function Navbar({
             </>
           )}
 
-          {/* Employer Actions: Profile & Sign Out */}
+          {/* Employer Actions: Company Profile & Sign Out */}
           {role === "employer" && (
             <>
               <Link
@@ -255,18 +295,9 @@ export function Navbar({
             </>
           )}
 
-          {/* Worker Actions: Language Toggle, Profile & Sign Out */}
+          {/* Worker Actions: Worker Profile & Sign Out */}
           {role === "worker" && (
             <>
-              <div className="flex items-center gap-1 text-[11px] font-mono text-gray-400 bg-white/[0.03] px-2.5 py-1 rounded-full border border-white/5">
-                <button
-                  onClick={() => setLang(lang === "EN" ? "HI" : lang === "HI" ? "MR" : "EN")}
-                  className="text-white hover:text-amber-400 transition-colors font-bold"
-                >
-                  {lang === "EN" ? "English" : lang === "HI" ? "हिन्दी" : "मराठी"}
-                </button>
-              </div>
-
               <Link
                 href="/worker/profile"
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${

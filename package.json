@@ -13,6 +13,7 @@
     "ship": "bash scripts/ship.sh",
     "autofetch": "bash scripts/autofetch.sh",
     "db:sync": "bash scripts/db-sync.sh",
+    "test": "turbo run test",
     "test:all": "turbo run test"
   },
   "devDependencies": {
