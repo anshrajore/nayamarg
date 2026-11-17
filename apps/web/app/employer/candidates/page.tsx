@@ -220,7 +220,7 @@ function EmployerCandidatesContent() {
                 <div className="mt-3 pt-3 border-t border-white/[0.04] flex items-center justify-between text-xs text-gray-400 font-mono">
                   <span>Match: {candidate.matchScore}%</span>
                   <span>Exp: {candidate.experienceYears}y</span>
-                  <span className="text-emerald-400">₹{candidate.expectedSalary.toLocaleString()}</span>
+                  <span className="text-emerald-400">₹{(candidate.expectedSalary ?? candidate.salaryExpectation ?? 18000).toLocaleString()}</span>
                 </div>
               </div>
             );
@@ -243,7 +243,7 @@ function EmployerCandidatesContent() {
                       <span className="text-xs font-mono text-gray-400">({selectedCandidate.id})</span>
                     </div>
                     <div className="flex items-center gap-3 text-xs text-gray-400 mt-1">
-                      <span>{selectedCandidate.phoneMasked}</span>
+                      <span>{selectedCandidate.phoneMasked || selectedCandidate.phone}</span>
                       <span>•</span>
                       <span>Primary Lang: {selectedCandidate.preferredLanguage}</span>
                     </div>
@@ -270,7 +270,7 @@ function EmployerCandidatesContent() {
                   </span>
                 </div>
                 <div className="text-xs text-gray-300 italic bg-black/30 p-3 rounded-lg border border-purple-500/10">
-                  "{selectedCandidate.voiceCallSummary || "Candidate confirmed 3 years experience on Fanuc 3-axis CNC machines. Agreed to rotational day/night shifts and confirmed commute distance of 4.2 km is acceptable."}"
+                  "{selectedCandidate.voiceCallSummary || selectedCandidate.callTranscript || "Candidate confirmed 3 years experience on Fanuc 3-axis CNC machines. Agreed to rotational day/night shifts and confirmed commute distance of 4.2 km is acceptable."}"
                 </div>
                 <div className="flex items-center justify-between text-[11px] text-gray-400 font-mono pt-1">
                   <span>Speech-to-Text Model: Sarvam-1 Vernacular</span>
@@ -290,7 +290,7 @@ function EmployerCandidatesContent() {
                 </div>
                 <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
                   <span className="text-gray-400 block text-[11px]">Expected Wage</span>
-                  <span className="text-white font-bold">₹{selectedCandidate.expectedSalary.toLocaleString()}/mo</span>
+                  <span className="text-white font-bold">₹{(selectedCandidate.expectedSalary ?? selectedCandidate.salaryExpectation ?? 18000).toLocaleString()}/mo</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
                   <span className="text-gray-400 block text-[11px]">Shift Availability</span>

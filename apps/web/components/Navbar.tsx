@@ -100,12 +100,12 @@ export function Navbar({
               >
                 Find Work
               </button>
-              <a href="/#how-it-works" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
+              <Link href="/#how-it-works" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
                 How It Works
-              </a>
-              <a href="/#featured-talent" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
+              </Link>
+              <Link href="/#featured-talent" className="px-4 py-1.5 rounded-full hover:text-white transition-all">
                 Featured Talent
-              </a>
+              </Link>
             </>
           )}
 

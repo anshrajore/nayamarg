@@ -36,17 +36,21 @@ export interface Candidate {
   id: string;
   name: string;
   phone: string;
+  phoneMasked?: string;
   city: string;
   distanceKm: number;
   skills: string[];
   experienceYears: number;
   matchScore: number;
   salaryExpectation: number;
+  expectedSalary?: number;
   preferredLanguage: string;
   availability: "AVAILABLE" | "EMPLOYED" | "NOTICE_PERIOD";
   interviewInterest: boolean;
   status: "MATCHED" | "QUEUED" | "CALLING" | "INTERESTED" | "QUALIFIED" | "INTERVIEW_SCHEDULED" | "OFFER_MADE" | "JOINED" | "DECLINED" | "UNREACHABLE";
   callTranscript?: string;
+  voiceCallSummary?: string;
+  verifiedTrade?: boolean;
   availableFrom?: string;
 }
 
